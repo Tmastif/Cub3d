@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:09:21 by htharrau          #+#    #+#             */
-/*   Updated: 2025/01/28 14:53:02 by ilazar           ###   ########.fr       */
+/*   Updated: 2025/01/29 15:31:25 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ char	*ft_strchr(const char *s, int c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strtrim(const char *s1, const char *set);
 
-// int		ft_atoi(const char *nptr);
+//int		ft_atoi(const char *nptr);
 // void	ft_bzero(void *s, size_t n);
 // void	*ft_calloc(size_t nmemb, size_t size);
 // int		ft_isalnum(int c);
 // int		ft_isalpha(int c);
 // int		ft_isascii(int c);
-// int		ft_isdigit(int c);
+int		ft_isdigit(int c);
 // int		ft_isprint(int c);
 // char	*ft_itoa(int n);
 // void	*ft_memchr(const void *s, int c, size_t n);

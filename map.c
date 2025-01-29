@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 17:11:28 by ilazar            #+#    #+#             */
-/*   Updated: 2025/01/28 17:39:41 by ilazar           ###   ########.fr       */
+/*   Updated: 2025/01/29 15:57:27 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,19 @@ int make_map(char *file_name, t_data *data)
     }
     close(fd);
 
-
     //check
-    printf("CHECK:\n");
-    printf("No: %s\n", data->no);
-    printf("So: %s\n", data->so);
-    printf("Wo: %s\n", data->we);
-    printf("Eo: %s\n", data->ea);
+    if (status == SUCCESS)
+    {
+        printf("CHECK:\n");
+        printf("No: %s\n", data->no);
+        printf("So: %s\n", data->so);
+        printf("Wo: %s\n", data->we);
+        printf("Eo: %s\n", data->ea);
 
-    printf("F: %d\n", data->floor_clr);
-    printf("C: %d\n", data->ceiling_clr);
+        printf("F: %d\n", data->floor_clr);
+        printf("C: %d\n", data->ceiling_clr);
 
-
+    }
     clean_parse(data);
     return (status);
 }
@@ -85,30 +86,63 @@ int     get_elem_path(char *line, char **element)
     int i;
 
     if (*element)
-        return (FAILURE);
+        return (err_msg("Map contains a duplicate element :/", FAILURE));
     i = 2;
     while (line[i] == ' ')
         i++;
     if (line[i] == '\0')
-        return (err_msg("bad path :/", FAILURE));
+        return (err_msg("Map contains a bad path :/", FAILURE));
     *element = ft_strdup(&line[i]);
     return (SUCCESS);
 }
 
+int     get_clr_component(char *line, int *i, int *comp)
+{
+    *comp = 0;
+    if (line[*i] == '\0' || !ft_isdigit(line[*i]) )
+        return (err_msg("Map contains a bad color element :/", -1));
+    while (line[*i] != '\0' && line[*i] != ',')
+    {
+        if (line[*i] == '\n' || line[*i] == ' ')
+            break ;
+        if (!ft_isdigit(line[*i]))
+            return (err_msg("Map contains an impossible color :/", -1));
+        *comp = *comp + line[*i] - '0';
+        *i = *i + 1;
+        if (ft_isdigit(line[*i]))
+		    *comp = *comp * 10;
+    }
+    *i = *i + 1;
+    if (*comp > 255 || *comp < 0)
+            return (err_msg("Map contains an impossible color :/", -1));
+    return (*comp);
+}
+
 int get_clr_elem(char *line, int *element)
 {
+    int i;
     int r;
     int g;
     int b;
 
-
-    (void) line;
-    r = 225;
-    g = 12;
-    b = 0;
+    i = 0;
+    while (line[i] == ' ')
+        i++;
+    if (get_clr_component(line, &i, &r) == -1)
+        return (FAILURE);
+    printf("r: %d\n", r);
+    if (get_clr_component(line, &i, &g) == -1)
+        return (FAILURE);
+    printf("g: %d\n", g);
+    if (get_clr_component(line, &i, &b) == -1)
+        return (FAILURE);
+    while (line[i] == ' ')
+        i++;
+    if (line[i] != '\n')
+        return (err_msg("Map contains a bad color element :/", FAILURE));
+    // printf("b: %d\n", b);
     *element = r << 16 | g << 8 | b;
     return (SUCCESS);
-    //else return FAILURE
 }
 
 //an element found - will be validated and stored in data. if not valid returns NULL
@@ -119,16 +153,16 @@ int     parse_elements(char *line, int i, t_data *data)
     status = FAILURE;
     if (line[i] == 'N' && line[i + 1] == 'O')
         status = get_elem_path(line, &data->no);
-    if (line[i] == 'S' && line[i + 1] == 'O')
+    else if (line[i] == 'S' && line[i + 1] == 'O')
         status = get_elem_path(line, &data->so);
-    if (line[i] == 'W' && line[i + 1] == 'E')
+    else if (line[i] == 'W' && line[i + 1] == 'E')
         status = get_elem_path(line, &data->we);
-    if (line[i] == 'E' && line[i + 1] == 'A')
+    else if (line[i] == 'E' && line[i + 1] == 'A')
         status = get_elem_path(line, &data->ea);
-    if (line[i] == 'F')
-        status = get_clr_elem(line, &data->floor_clr);
-    if (line[i] == 'C')
-        status = get_clr_elem(line, &data->ceiling_clr);
+    else if (line[i] == 'F')
+        status = get_clr_elem(&line[i + 1], &data->floor_clr);
+    else if (line[i] == 'C')
+        status = get_clr_elem(&line[i + 1], &data->ceiling_clr);
     return(status);
 }
 
@@ -146,7 +180,7 @@ int    elements_finder(int fd, t_data *data, int status)
         line = get_next_line2(fd);
         if (!line)
             return (err_msg("No map found in file :/", FAILURE));
-        printf("%s", line);
+        // printf("%s", line);
         i = 0;
         while (line[i] == ' ')
             i++;
