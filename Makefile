@@ -6,7 +6,7 @@
 #    By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/27 18:32:21 by ilazar            #+#    #+#              #
-#    Updated: 2025/01/28 17:28:18 by ilazar           ###   ########.fr        #
+#    Updated: 2025/01/30 12:15:35 by ilazar           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 # Source files
-SRCS = main.c map.c errors.c init.c get_next_line_bonus.c gnl.c gnl_utils.c
+SRCS = main.c map.c errors.c init.c elements.c get_next_line_bonus.c gnl.c gnl_utils.c
 
 # Object files
 OBJ_DIR = obj
@@ -32,7 +32,7 @@ LIBGNL = gnl
 LIBFILE = libftplus.a
 
 # Include and library paths
-INCLUDES = -I cub2d.h -I gnl.h -I get_next_line_bonus.h
+INCLUDES = -I cub3d_parse.h -I gnl.h -I get_next_line_bonus.h
 LIBPATH = -L .
 
 # Default target

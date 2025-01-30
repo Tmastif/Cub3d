@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:09:21 by htharrau          #+#    #+#             */
-/*   Updated: 2025/01/29 15:31:25 by ilazar           ###   ########.fr       */
+/*   Updated: 2025/01/30 15:22:42 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*ft_strtrim(const char *s1, const char *set);
 // void	*ft_calloc(size_t nmemb, size_t size);
 // int		ft_isalnum(int c);
 // int		ft_isalpha(int c);
-// int		ft_isascii(int c);
+int		ft_isascii(int c);
 int		ft_isdigit(int c);
 // int		ft_isprint(int c);
 // char	*ft_itoa(int n);
@@ -53,7 +53,7 @@ int		ft_isdigit(int c);
 int	ft_strcmp(const char *s1, const char *s2);
 
 
-//char	*ft_strchr(const char *str, int c);
+char	*ft_strchr(const char *str, int c);
 //char	*ft_strdup(char *src);
 
 //char	*ft_strjoin(char const *s1, const char *s2);

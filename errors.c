@@ -6,11 +6,11 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 17:14:14 by ilazar            #+#    #+#             */
-/*   Updated: 2025/01/28 11:13:36 by ilazar           ###   ########.fr       */
+/*   Updated: 2025/01/30 12:12:14 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub2d.h"
+#include "cub3d_parse.h"
 
 int err_msg(char *msg, int err_nr)
 {
