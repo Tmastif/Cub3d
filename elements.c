@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:02:11 by ilazar            #+#    #+#             */
-/*   Updated: 2025/01/30 16:12:42 by ilazar           ###   ########.fr       */
+/*   Updated: 2025/01/31 16:46:04 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int     parse_elements(char *line, t_data *data, int found_map)
     int     status;
     int     i;
     
-    printf("parsing: %s\n", line);
+    // printf("parsing: %s\n", line);
     if (found_map)
         return(err_msg("The map isn't the last element in the file :/", FAILURE));
     status = FAILURE;
@@ -54,13 +54,14 @@ static int     get_elem_path(char *line, char **element)
     int start;
     int end;
 
+    printf("line element: %s\n", line);
     if (*element)
         return (err_msg("Map contains a duplicate element :/", FAILURE));
     start = 2;
     while (line[start] == ' ')
         start++;
     end = start;
-    while (line[end] != '\n' || line[end] == '\0')
+    while (line[end] != '\n' && line[end] != '\0')
     {
         if (!ft_isascii(line[end]) || ft_isspace(line[end]))
            return (err_msg("Map contains a bad path :/", FAILURE));
@@ -69,7 +70,14 @@ static int     get_elem_path(char *line, char **element)
     if (end == start)
         return (err_msg("Map is missing a path :/", FAILURE));
     line[end] = '\0';
+    
+    printf("saved element: %s$\n", &line[start]);
+
+
     *element = ft_strdup(&line[start]);
+    // *element = ft_strdup("aaaa");
+        
+    printf("saved element: %s$\n", *element);
     if (*element == NULL)
         return (MALLOC_ERR);
     return (SUCCESS);

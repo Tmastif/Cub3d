@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:13:55 by ilazar            #+#    #+#             */
-/*   Updated: 2025/01/30 15:54:04 by ilazar           ###   ########.fr       */
+/*   Updated: 2025/01/31 16:34:34 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,11 @@ int         make_map(char *file_name, t_data *data);
 char	    *get_next_line2(int fd);
 
 //to be utils
-int ft_isspace(char c);
+int     ft_isspace(char c);
+void	free_2d_char(char **arr);
+int     line_empty(char *line);
+char    *is_first_occurance(char *str, char c);
+void    print_map(char **map);
 
 
 #endif

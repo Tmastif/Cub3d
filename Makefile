@@ -6,7 +6,7 @@
 #    By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/27 18:32:21 by ilazar            #+#    #+#              #
-#    Updated: 2025/01/30 12:15:35 by ilazar           ###   ########.fr        #
+#    Updated: 2025/01/31 16:37:07 by ilazar           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 # Source files
-SRCS = main.c map.c errors.c init.c elements.c get_next_line_bonus.c gnl.c gnl_utils.c
+SRCS = main.c map.c errors.c init.c elements.c get_next_line_bonus.c gnl.c gnl_utils.c \
+		parse_utils.c
 
 # Object files
 OBJ_DIR = obj
@@ -52,7 +53,8 @@ $(OBJ_DIR):
 
 # Clean up
 clean:
-	rm -f $(OBJ_DIR) $(TARGET)
+	rm -rf $(OBJ_DIR)
+	rm -f $(TARGET)
 
 # Phony targets
 .PHONY: all clean

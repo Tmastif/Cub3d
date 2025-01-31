@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 17:11:28 by ilazar            #+#    #+#             */
-/*   Updated: 2025/01/30 16:21:22 by ilazar           ###   ########.fr       */
+/*   Updated: 2025/01/31 16:41:56 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,11 @@
 
 
 int     elements_finder(int fd, t_data *data, int status);
-int    save_map(int fd, char **map, char **line, int *found_map);
-void    line_to_arr(char **map, char *line);
-void	free_2d_char(char **arr);
+int    save_map(int fd, char ***map, char **line, int *found_map);
 void    clean_parse(t_data *data);
 
-int     line_empty(char *line);
-char    *is_first_occurance(char *str, char c);
+char     **add_line_to_arr(char **map, char *line, int *length);
+
 
 static int valid_map_file(char *name, int *fd);
 
@@ -44,7 +42,7 @@ int make_map(char *file_name, t_data *data)
     //check
     if (status == SUCCESS)
     {
-        printf("CHECK:\n");
+        printf("\nCHECK:\n");
         printf("No: $%s$\n", data->no);
         printf("So: $%s$\n", data->so);
         printf("Wo: $%s$\n", data->we);
@@ -53,7 +51,11 @@ int make_map(char *file_name, t_data *data)
         printf("F: %d\n", data->floor_clr);
         printf("C: %d\n", data->ceiling_clr);
 
+        // print_map(data->map);
+
     }
+    
+    printf("No: $%s$\n", data->no);
     clean_parse(data);
     return (status);
 }
@@ -61,25 +63,58 @@ int make_map(char *file_name, t_data *data)
 
 //save the map to an array
 //make sure that there isn't invalid text under the map
-//check that the map is valid
+//check that the map is valid:
+//trim \n
 //trim the array to the first accurance of '1'
-int    save_map(int fd, char **map, char **line, int *found_map)
+int    save_map(int fd, char ***map, char **line, int *found_map)
 {
+    int length;
     
-    if (found_map)
+    if (*found_map)
         return (err_msg("Invalid map :/", FAILURE));
-    
-    printf ("save map: %s", *line);
-
-    
-    (void)map;
-    (void)fd;
-    (void)line;
-    // map[0] = ft_strdup(line);
+    length = 1;
+    *map = (char **) malloc (sizeof(char *) * (2));
+    *map[0] = ft_strdup(*line);
+    *map[1] = NULL;
+    while (*line != NULL)
+    {
+        free(*line);
+        *line = get_next_line2(fd);
+        if (!*line)
+            break;
+        if (!is_first_occurance(*line, '1'))
+        {
+            if (!line_empty(*line))
+                return (err_msg("Invalid map2 :/", FAILURE));
+            else
+                break ;
+        }
+        *map = add_line_to_arr(*map, *line, &length);
+    }
+    *found_map = 1;
     return (SUCCESS);
 }
 
+//adds a new line to the map array
+char     **add_line_to_arr(char **map, char *line, int *length)
+{
+    char    **tmp;
+    int     i;
 
+    tmp = (char **) malloc (sizeof(char *) * (*length + 2));
+    i = 0;
+    while (i < *length)
+    {
+        tmp[i] = ft_strdup(map[i]);
+        free(map[i]);
+        i++;
+    }
+    tmp[i] = ft_strdup(line);
+    tmp[i+1] = NULL;
+    *length = *length + 1;
+    free(map);
+    return (tmp);
+}
 
 
 int    elements_finder(int fd, t_data *data, int status)
@@ -94,84 +129,32 @@ int    elements_finder(int fd, t_data *data, int status)
     {
         if (line)
             free(line);
+        // printf("line start: %s", line);
         line = get_next_line2(fd);
-
-        printf("line: %s", line);
-        
-        if (!line && found_map) 
+        // printf("line: %s\n", line);
+        if (!line && found_map)
+        {
+            printf("Nooooo: $%s$\n", data->no);
+            printf("Sooooo: $%s$\n", data->so);
             return (status); //found map = 1
+        }
         if (!line)
             return (err_msg("No map found in file :/", FAILURE)); //found map = 0
-        
-        
         if (line_empty(line))
-        {
-            printf("empty: %s", line);
             continue ;
-        }
-        // printf("%s", line);
-        // i = 0;
-        // while (line[i] == ' ') //ft_isspace
-        //     i++;
-        // if (line[i] == '\n')
-        //     continue ;
-
-        // while (ft_isspace(line[i]))
-            // i++; 
-        // if (line[i] == '1')
         if (is_first_occurance(line, '1') != NULL)
-        {
-            printf("hey\n");
-            status = save_map(fd ,data->map, &line, &found_map);
-        }
+            status = save_map(fd ,&data->map, &line, &found_map);
         else
-        {
-            // printf("heyjjj\n");
             status = parse_elements(line, data, found_map);
-        }
+        // printf("line end: %s\n", line);
     }
+    // if (line)
+    
     free(line);
+    printf("Nooooo: $%s$\n", data->no);
     return (status);
 }
 
-//returns 1 if first occurance of the string is char c
-//ignores tabs and spaces
-char    *is_first_occurance(char *str, char c)
-{
-    int     i;
-
-    i = 0;
-
-    while (str[i] == '\t' || str[i] == ' ')
-        i++;
-    if (str[i] == c)
-            return (&str[i]);
-    return (NULL);
-}
-
-int     line_empty(char *line)
-{
-    int     i;
-
-    i = 0;
-    while (line[i] != '\0' && line[i] != '\n')
-    {
-        if (ft_isspace(line[i]))
-            i++;
-        else
-            return (0);
-    }
-    return (1);
-    }
-
-void line_to_arr(char **map, char *line)
-{
-    (void)map;
-    printf ("%s", line);
-    
-    (void)line;
-    // map[0] = ft_strdup(line);
-}
 
 //check for no spaces in file's name, for .cub format and if file exists
 static int valid_map_file(char *name, int *fd)
@@ -196,23 +179,6 @@ static int valid_map_file(char *name, int *fd)
     if (*fd == -1)
         return (err_msg("File has no permissions or doesn't exists :/", FAILURE));
     return (SUCCESS);
-}
-
-void	free_2d_char(char **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i] != NULL)
-		free(arr[i++]);
-	free(arr);
-}
-
-int ft_isspace(char c)
-{
-    if ((c <= 13 && c >= 9) || c == ' ')
-        return (1);
-    return (0);
 }
 
 void    clean_parse(t_data *data)
