@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 17:11:28 by ilazar            #+#    #+#             */
-/*   Updated: 2025/01/31 16:41:56 by ilazar           ###   ########.fr       */
+/*   Updated: 2025/01/31 17:02:45 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ int make_map(char *file_name, t_data *data)
         printf("\nCHECK:\n");
         printf("No: $%s$\n", data->no);
         printf("So: $%s$\n", data->so);
-        printf("Wo: $%s$\n", data->we);
-        printf("Eo: $%s$\n", data->ea);
+        printf("We: $%s$\n", data->we);
+        printf("Ea: $%s$\n", data->ea);
 
         printf("F: %d\n", data->floor_clr);
         printf("C: %d\n", data->ceiling_clr);
@@ -55,7 +55,7 @@ int make_map(char *file_name, t_data *data)
 
     }
     
-    printf("No: $%s$\n", data->no);
+    // printf("No: $%s$\n", data->no);
     clean_parse(data);
     return (status);
 }
@@ -109,6 +109,7 @@ char     **add_line_to_arr(char **map, char *line, int *length)
         free(map[i]);
         i++;
     }
+    printf("mapline: %s$", line);
     tmp[i] = ft_strdup(line);
     tmp[i+1] = NULL;
     *length = *length + 1;

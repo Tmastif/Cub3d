@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:02:11 by ilazar            #+#    #+#             */
-/*   Updated: 2025/01/31 16:46:04 by ilazar           ###   ########.fr       */
+/*   Updated: 2025/01/31 16:58:18 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,13 @@ static int     get_elem_path(char *line, char **element)
         return (err_msg("Map is missing a path :/", FAILURE));
     line[end] = '\0';
     
-    printf("saved element: %s$\n", &line[start]);
+    printf("before strdup: %s$\n", &line[start]);
 
 
     *element = ft_strdup(&line[start]);
     // *element = ft_strdup("aaaa");
         
-    printf("saved element: %s$\n", *element);
+    printf("after strdup: %s$\n", *element);
     if (*element == NULL)
         return (MALLOC_ERR);
     return (SUCCESS);

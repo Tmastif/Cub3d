@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:13:55 by ilazar            #+#    #+#             */
-/*   Updated: 2025/01/31 16:34:34 by ilazar           ###   ########.fr       */
+/*   Updated: 2025/01/31 17:00:31 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@
 typedef struct  s_data
 {
     char    **map;
-    char    *no;
-    char    *so;
-    char    *we;
     char    *ea;
+    char    *we;
+    char    *so;
+    char    *no;
     int     floor_clr;
     int     ceiling_clr;
     int     player_x;   //player x position
