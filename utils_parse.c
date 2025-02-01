@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_utils.c                                      :+:      :+:    :+:   */
+/*   utils_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: inbar <inbar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 16:31:50 by ilazar            #+#    #+#             */
-/*   Updated: 2025/01/31 16:33:37 by ilazar           ###   ########.fr       */
+/*   Updated: 2025/02/01 17:09:30 by inbar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +63,16 @@ char    *is_first_occurance(char *str, char c)
     return (NULL);
 }
 
-void    print_map(char **map)
+void    clean_parse(t_data *data)
 {
-    int i;
-
-    printf("\nMAP########\n");
-    i = 0;
-    while (map[i] != NULL)
-    {
-        printf("%s$", map[i]);
-        i++;
-    }
-    printf("MAP#########\n\n");
+    if (data->map)
+        free_2d_char(data->map);
+    if (data->no)
+        free(data->no);
+    if (data->so)
+        free(data->so);
+    if (data->we)
+        free(data->we);
+    if (data->ea)
+        free(data->ea);
 }

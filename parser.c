@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: inbar <inbar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 17:11:28 by ilazar            #+#    #+#             */
-/*   Updated: 2025/01/31 17:02:45 by ilazar           ###   ########.fr       */
+/*   Updated: 2025/02/01 17:18:27 by inbar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,18 @@
 
 
 int     elements_finder(int fd, t_data *data, int status);
-int    save_map(int fd, char ***map, char **line, int *found_map);
-void    clean_parse(t_data *data);
-
-char     **add_line_to_arr(char **map, char *line, int *length);
-
+int     save_map(int fd, t_data *data, char **line, int *found_map);
+char    **add_line_to_arr(char **map, char *line, int *length);
 
 static int valid_map_file(char *name, int *fd);
 
-int make_map(char *file_name, t_data *data)
+
+int parser(char *file_name, t_data *data)
 {
     int     fd;
     int     status;
     
-    status = FAILURE;
+    status = PARSE_ERR;
     if (valid_map_file(file_name, &fd) == SUCCESS)
     {
         status = elements_finder(fd, data, 0);
@@ -41,21 +39,8 @@ int make_map(char *file_name, t_data *data)
 
     //check
     if (status == SUCCESS)
-    {
-        printf("\nCHECK:\n");
-        printf("No: $%s$\n", data->no);
-        printf("So: $%s$\n", data->so);
-        printf("We: $%s$\n", data->we);
-        printf("Ea: $%s$\n", data->ea);
-
-        printf("F: %d\n", data->floor_clr);
-        printf("C: %d\n", data->ceiling_clr);
-
-        // print_map(data->map);
-
-    }
+        print_parsing(data);
     
-    // printf("No: $%s$\n", data->no);
     clean_parse(data);
     return (status);
 }
@@ -66,16 +51,17 @@ int make_map(char *file_name, t_data *data)
 //check that the map is valid:
 //trim \n
 //trim the array to the first accurance of '1'
-int    save_map(int fd, char ***map, char **line, int *found_map)
+int    save_map(int fd, t_data *data, char **line, int *found_map)
 {
     int length;
+    char **map;
     
     if (*found_map)
-        return (err_msg("Invalid map :/", FAILURE));
+        return (err_msg("Invalid map :/", PARSE_ERR));
     length = 1;
-    *map = (char **) malloc (sizeof(char *) * (2));
-    *map[0] = ft_strdup(*line);
-    *map[1] = NULL;
+    map = (char **) malloc (sizeof(char *) * (2));
+    map[0] = ft_strdup(*line);
+    map[1] = NULL;
     while (*line != NULL)
     {
         free(*line);
@@ -85,12 +71,12 @@ int    save_map(int fd, char ***map, char **line, int *found_map)
         if (!is_first_occurance(*line, '1'))
         {
             if (!line_empty(*line))
-                return (err_msg("Invalid map2 :/", FAILURE));
-            else
-                break ;
+                return (err_msg("Invalid map :/", PARSE_ERR));
+            break ;
         }
-        *map = add_line_to_arr(*map, *line, &length);
+        map = add_line_to_arr(map, *line, &length);
     }
+    data->map = map;
     *found_map = 1;
     return (SUCCESS);
 }
@@ -109,7 +95,6 @@ char     **add_line_to_arr(char **map, char *line, int *length)
         free(map[i]);
         i++;
     }
-    printf("mapline: %s$", line);
     tmp[i] = ft_strdup(line);
     tmp[i+1] = NULL;
     *length = *length + 1;
@@ -126,7 +111,7 @@ int    elements_finder(int fd, t_data *data, int status)
     line = NULL;
     found_map = 0;
     status = SUCCESS;
-    while (status != FAILURE)
+    while (status != PARSE_ERR)
     {
         if (line)
             free(line);
@@ -134,25 +119,17 @@ int    elements_finder(int fd, t_data *data, int status)
         line = get_next_line2(fd);
         // printf("line: %s\n", line);
         if (!line && found_map)
-        {
-            printf("Nooooo: $%s$\n", data->no);
-            printf("Sooooo: $%s$\n", data->so);
             return (status); //found map = 1
-        }
         if (!line)
-            return (err_msg("No map found in file :/", FAILURE)); //found map = 0
+            return (err_msg("No map found in file :/", PARSE_ERR)); //found map = 0
         if (line_empty(line))
             continue ;
         if (is_first_occurance(line, '1') != NULL)
-            status = save_map(fd ,&data->map, &line, &found_map);
+            status = save_map(fd, data, &line, &found_map);
         else
             status = parse_elements(line, data, found_map);
-        // printf("line end: %s\n", line);
     }
-    // if (line)
-    
     free(line);
-    printf("Nooooo: $%s$\n", data->no);
     return (status);
 }
 
@@ -163,35 +140,22 @@ static int valid_map_file(char *name, int *fd)
     int i;
 
     if (name[0] == '\0')
-        return (err_msg("Empty file name :/", FAILURE));
+        return (err_msg("Empty file name :/", PARSE_ERR));
     i = 0;
     while (name[i] != '\0' && name[i] != '.')
     {
         if (name[0] == ' ')
-            return (err_msg("No spaces in the filename please :/", FAILURE));
+            return (err_msg("No spaces in the filename please :/", PARSE_ERR));
         i++;
     }
     if (ft_strcmp(&name[i], ".cub") != 0)
-        return (err_msg("Wrong file format. Should be of format \".cub\" :/", FAILURE));
+        return (err_msg("Wrong file format. Should be of format \".cub\" :/", PARSE_ERR));
     *fd = open(name, O_DIRECTORY);
     if (*fd != -1)
-        return (err_msg("File is a directory :/", FAILURE));
+        return (err_msg("File is a directory :/", PARSE_ERR));
     *fd = open(name, O_RDONLY);
     if (*fd == -1)
         return (err_msg("File has no permissions or doesn't exists :/", FAILURE));
     return (SUCCESS);
 }
 
-void    clean_parse(t_data *data)
-{
-    if (data->map)
-        free_2d_char(data->map);
-    if (data->no)
-        free(data->no);
-    if (data->so)
-        free(data->so);
-    if (data->we)
-        free(data->we);
-    if (data->ea)
-        free(data->ea);
-}

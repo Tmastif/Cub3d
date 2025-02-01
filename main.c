@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: inbar <inbar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 17:12:03 by ilazar            #+#    #+#             */
-/*   Updated: 2025/01/30 14:32:35 by ilazar           ###   ########.fr       */
+/*   Updated: 2025/02/01 17:16:08 by inbar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 int main(int ac, char **av)
 {
     t_data  data;
+    int     status;
     
     if (ac != 2)
         return (err_msg("Invalid argument number", PARSE_ERR));
@@ -24,10 +25,11 @@ int main(int ac, char **av)
     init_data(&data);
 
     //may return malloc err
-    if (make_map(av[1], &data) == SUCCESS)
+    status = parser(av[1], &data);
+    if (status == SUCCESS)
         printf("success\n");
     
     //clean data
 
-    return (0);
+    return (status);
 }
