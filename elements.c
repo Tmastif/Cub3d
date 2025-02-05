@@ -65,6 +65,8 @@ static int     get_elem_path(char *line, char **element)
     end = start;
     while (line[end] != '\n' && line[end] != '\0')
     {
+        if (line_empty(&line[end]))
+            break ;
         if (!ft_isascii(line[end]) || ft_isspace(line[end]))
            return (err_msg("Map contains a bad path :/", PARSE_ERR));
         end++;

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.c                                              :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inbar <inbar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 17:11:28 by ilazar            #+#    #+#             */
-/*   Updated: 2025/02/01 17:18:27 by inbar            ###   ########.fr       */
+/*   Updated: 2025/02/05 17:36:17 by inbar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,18 @@ int parser(char *file_name, t_data *data)
 
     //check
     if (status == SUCCESS)
+    {
         print_parsing(data);
+        status = map_parser(data);
+    }
     
     clean_parse(data);
     return (status);
 }
 
 
-//save the map to an array
-//make sure that there isn't invalid text under the map
+//save the map to an array - done
+//make sure that there isn't invalid text under the map - done
 //check that the map is valid:
 //trim \n
 //trim the array to the first accurance of '1'

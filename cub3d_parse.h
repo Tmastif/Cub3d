@@ -6,7 +6,7 @@
 /*   By: inbar <inbar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:13:55 by ilazar            #+#    #+#             */
-/*   Updated: 2025/02/01 17:14:31 by inbar            ###   ########.fr       */
+/*   Updated: 2025/02/05 17:23:56 by inbar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,9 @@ typedef struct  s_data
     int     ceiling_clr;
     int     player_x;   //player x position
     int     player_y;   //player y position
-    int     w_map;      //map width;
-    int     h_map;      //map hight;
+    char    player_dir; //player direction
+    int     w_map;      //map width
+    int     h_map;      //map hight
 
 }   t_data;
 
@@ -55,6 +56,8 @@ void        init_data(t_data *data);
 int         parser(char *file_name, t_data *data);
 char	    *get_next_line2(int fd);
 
+//map parser
+int     map_parser(t_data *data);
 
 //utils parse
 int     ft_isspace(char c);

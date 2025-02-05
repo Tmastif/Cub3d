@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: inbar <inbar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 11:56:14 by ilazar            #+#    #+#             */
-/*   Updated: 2025/01/31 16:53:59 by ilazar           ###   ########.fr       */
+/*   Updated: 2025/02/05 17:24:37 by inbar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void    init_data(t_data *data)
     data->ceiling_clr = -1;
     data->player_x = -1;
     data->player_y = -1;
+    data->player_dir = '0';
     data->w_map = -1;
     data->h_map = -1;
 }

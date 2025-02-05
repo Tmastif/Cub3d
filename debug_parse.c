@@ -6,7 +6,7 @@
 /*   By: inbar <inbar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 17:07:36 by inbar             #+#    #+#             */
-/*   Updated: 2025/02/01 17:12:02 by inbar            ###   ########.fr       */
+/*   Updated: 2025/02/05 16:54:52 by inbar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void    print_parsing(t_data *data)
     printf("We: $%s$\n", data->we);
     printf("Ea: $%s$\n", data->ea);
 
-    printf("F: %d\n", data->floor_clr);
-    printf("C: %d\n", data->ceiling_clr);
+    printf("F: $%d$\n", data->floor_clr);
+    printf("C: $%d$\n", data->ceiling_clr);
 
     print_map(data->map);
 }
@@ -34,7 +34,7 @@ void    print_map(char **map)
     i = 0;
     while (map[i] != NULL)
     {
-        printf("%s$", map[i]);
+        printf("%s$\n", map[i]);
         i++;
     }
     printf("#####MAP####\n\n");
