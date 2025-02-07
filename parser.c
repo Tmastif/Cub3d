@@ -6,7 +6,7 @@
 /*   By: inbar <inbar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 17:11:28 by ilazar            #+#    #+#             */
-/*   Updated: 2025/02/05 17:36:17 by inbar            ###   ########.fr       */
+/*   Updated: 2025/02/07 13:03:49 by inbar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,10 @@
 #include "gnl.h"
 
 
-int     elements_finder(int fd, t_data *data, int status);
-int     save_map(int fd, t_data *data, char **line, int *found_map);
-char    **add_line_to_arr(char **map, char *line, int *length);
-
-static int valid_map_file(char *name, int *fd);
+static int     valid_map_file(char *name, int *fd);
+static int     elements_finder(int fd, t_data *data, int status);
+static int     save_map(int fd, t_data *data, char **line, int *found_map);
+static char    **add_line_to_arr(char **map, char *line, int *length);
 
 
 int parser(char *file_name, t_data *data)
@@ -29,31 +28,78 @@ int parser(char *file_name, t_data *data)
     int     fd;
     int     status;
     
-    status = PARSE_ERR;
     if (valid_map_file(file_name, &fd) == SUCCESS)
-    {
         status = elements_finder(fd, data, 0);
-            // status = save_map(fd, data);
-    }
     close(fd);
-
-    //check
-    if (status == SUCCESS)
+    if (trim_lines(data) == SUCCESS)
     {
-        print_parsing(data);
-        status = map_parser(data);
+        if (valid_chars(data, 0, 0) == SUCCESS)
+            status = valid_map(data, status);
     }
+    
+    if (status == SUCCESS)
+        print_parsing(data);
     
     clean_parse(data);
     return (status);
 }
 
+//check for no spaces in file's name, for .cub format and if file exists
+static int valid_map_file(char *name, int *fd)
+{
+    int i;
 
-//save the map to an array - done
-//make sure that there isn't invalid text under the map - done
-//check that the map is valid:
-//trim \n
-//trim the array to the first accurance of '1'
+    if (name[0] == '\0')
+        return (err_msg("Empty file name :/", PARSE_ERR));
+    i = 0;
+    while (name[i] != '\0' && name[i] != '.')
+    {
+        if (name[0] == ' ')
+            return (err_msg("No spaces in the filename please :/", PARSE_ERR));
+        i++;
+    }
+    if (ft_strcmp(&name[i], ".cub") != 0)
+        return (err_msg("Wrong file format. Should be of format \".cub\" :/", PARSE_ERR));
+    *fd = open(name, O_DIRECTORY);
+    if (*fd != -1)
+        return (err_msg("File is a directory :/", PARSE_ERR));
+    *fd = open(name, O_RDONLY);
+    if (*fd == -1)
+        return (err_msg("File has no permissions or doesn't exists :/", FAILURE));
+    return (SUCCESS);
+}
+
+//finds the differenct map file elements
+int    elements_finder(int fd, t_data *data, int status)
+{
+    char    *line;
+    int     found_map;
+    
+    line = NULL;
+    found_map = 0;
+    status = SUCCESS;
+    while (status != PARSE_ERR)
+    {
+        if (line)
+            free(line);
+        line = get_next_line2(fd);
+        if (!line && found_map)
+            return (status);
+        if (!line)
+            return (err_msg("No map found in file :/", PARSE_ERR));
+        if (line_empty(line))
+            continue ;
+        if (is_first_occurance(line, '1') != NULL)
+            status = save_map(fd, data, &line, &found_map);
+        else
+            status = parse_elements(line, data, found_map);
+    }
+    free(line);
+    return (status);
+}
+
+//save the map to an array
+//make sure that there isn't invalid text under the map
 int    save_map(int fd, t_data *data, char **line, int *found_map)
 {
     int length;
@@ -104,61 +150,3 @@ char     **add_line_to_arr(char **map, char *line, int *length)
     free(map);
     return (tmp);
 }
-
-
-int    elements_finder(int fd, t_data *data, int status)
-{
-    char    *line;
-    int     found_map;
-    
-    line = NULL;
-    found_map = 0;
-    status = SUCCESS;
-    while (status != PARSE_ERR)
-    {
-        if (line)
-            free(line);
-        // printf("line start: %s", line);
-        line = get_next_line2(fd);
-        // printf("line: %s\n", line);
-        if (!line && found_map)
-            return (status); //found map = 1
-        if (!line)
-            return (err_msg("No map found in file :/", PARSE_ERR)); //found map = 0
-        if (line_empty(line))
-            continue ;
-        if (is_first_occurance(line, '1') != NULL)
-            status = save_map(fd, data, &line, &found_map);
-        else
-            status = parse_elements(line, data, found_map);
-    }
-    free(line);
-    return (status);
-}
-
-
-//check for no spaces in file's name, for .cub format and if file exists
-static int valid_map_file(char *name, int *fd)
-{
-    int i;
-
-    if (name[0] == '\0')
-        return (err_msg("Empty file name :/", PARSE_ERR));
-    i = 0;
-    while (name[i] != '\0' && name[i] != '.')
-    {
-        if (name[0] == ' ')
-            return (err_msg("No spaces in the filename please :/", PARSE_ERR));
-        i++;
-    }
-    if (ft_strcmp(&name[i], ".cub") != 0)
-        return (err_msg("Wrong file format. Should be of format \".cub\" :/", PARSE_ERR));
-    *fd = open(name, O_DIRECTORY);
-    if (*fd != -1)
-        return (err_msg("File is a directory :/", PARSE_ERR));
-    *fd = open(name, O_RDONLY);
-    if (*fd == -1)
-        return (err_msg("File has no permissions or doesn't exists :/", FAILURE));
-    return (SUCCESS);
-}
-

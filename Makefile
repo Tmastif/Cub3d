@@ -6,7 +6,7 @@
 #    By: inbar <inbar@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/27 18:32:21 by ilazar            #+#    #+#              #
-#    Updated: 2025/02/05 13:12:48 by inbar            ###   ########.fr        #
+#    Updated: 2025/02/07 13:03:18 by inbar            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CFLAGS = -Wall -Wextra -Werror
 
 # Source files
 SRCS = main.c parser.c errors.c init.c elements.c get_next_line_bonus.c gnl.c gnl_utils.c \
-		utils_parse.c debug_parse.c map.c
+		utils_parse.c debug_parse.c map_trim.c map_rules.c
 
 # Object files
 OBJ_DIR = obj

@@ -6,7 +6,7 @@
 /*   By: inbar <inbar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:13:55 by ilazar            #+#    #+#             */
-/*   Updated: 2025/02/05 17:23:56 by inbar            ###   ########.fr       */
+/*   Updated: 2025/02/07 13:05:32 by inbar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,26 @@ int         parser(char *file_name, t_data *data);
 char	    *get_next_line2(int fd);
 
 //map parser
-int     map_parser(t_data *data);
+int         map_parser(t_data *data);
+
+//map trim
+int         trim_lines(t_data *data);
+int         valid_chars(t_data *data, int i, int j);
+int         is_player(char c);
+
+//map rules
+int         valid_map(t_data *data, int status);
 
 //utils parse
-int     ft_isspace(char c);
-void	free_2d_char(char **arr);
-int     line_empty(char *line);
-char    *is_first_occurance(char *str, char c);
-void    clean_parse(t_data *data);
+int         ft_isspace(char c);
+void	    free_2d_char(char **arr);
+int         line_empty(char *line);
+char        *is_first_occurance(char *str, char c);
+void        clean_parse(t_data *data);
 
 //debug parse
-void    print_parsing(t_data *data);
-void    print_map(char **map);
+void        print_parsing(t_data *data);
+void        print_map(char **map);
 
 
 #endif

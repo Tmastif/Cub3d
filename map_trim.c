@@ -1,93 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.c                                              :+:      :+:    :+:   */
+/*   map_trim.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inbar <inbar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:01:22 by inbar             #+#    #+#             */
-/*   Updated: 2025/02/06 15:39:31 by inbar            ###   ########.fr       */
+/*   Updated: 2025/02/07 13:05:13 by inbar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_parse.h"
 
-int     trim_lines(t_data *data);
-int     get_min_start(t_data *data, int *min_start, int i);
-int     valid_chars(t_data *data, int i, int j);
+static int     get_min_start(t_data *data, int *min_start, int i);
 
-int     map_parser(t_data *data)
+//returns 1 if char is a player char
+int     is_player(char c)
 {
-    int status;
-    
-    status = SUCCESS;
-    
-    status = trim_lines(data);
-    if (status != SUCCESS)
-        return (status);
-    
-    if (valid_chars(data, 0, 0) != SUCCESS)
-        return (PARSE_ERR);
-    
-    status = valid_map(data);
-
-    print_map(data->map);
-    
-    return (status);
-
-}
-
-int     check_space(char **map, int row, int col)
-{
-    //if col is not 0 -> leftside must be 1 or ' '
-    //if row isnt last row -> line down must be 1 or ' ' or zero
-    
-    
-    return (SUCCESS);
-}
-
-int     check_zero(char **map, int row, int col)
-{
-    // if col is not 0 -> leftside must be 1 or 0 or player
-    // if row is not last one -> line down must be 1 or 0 or player
-    
-    
-    return (SUCCESS);
-}
-
-int    valid_map(t_data *data)
-{
-    int     i;
-    int     col;
-    char    c;
-    int     status;
-
-    status = SUCCESS;
-    i = -1;
-    while (data->map[++i] != NULL && status == SUCCESS)
-    {
-        col = 0;
-        while (data->map[i][col + 1] != '\0')
-            col++;
-        if (data->map[i][col] != '1')
-            return (err_msg("Map contains open walls :/", PARSE_ERR));
-        while (--col != 0 && status == SUCCESS)
-        {
-            c = data->map[i][col];
-            if (c == '1')
-                continue;
-            else if (c == ' ')
-                status = check_space(data->map, i, col);
-            else if (c == '0' || c <= 90 || c >= 65)
-                status = check_zero(data->map, i, col);
-        }
-    }
-    return (status);
+    if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
+        return (1);
+    return (0);
 }
 
 
 //extracts player position and direction, returns error if found invalid character
-//because of extracting players position, should happen after trimming map lines
+//because of extracting player's position, should happen after trimming map lines
 int     valid_chars(t_data *data, int i, int j)
 {
     char    c;
@@ -99,7 +36,7 @@ int     valid_chars(t_data *data, int i, int j)
         while (data->map[i][++j] != '\0')
         {
             c = data->map[i][j];
-            if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
+            if (is_player(c))
             {
                 if (data->player_x != -1)
                     return (err_msg("Multiple players found in map :/", PARSE_ERR));
@@ -151,7 +88,7 @@ int     trim_lines(t_data *data)
 
 //find the leftmost start of the lines in the map array
 //saves map width;
-int     get_min_start(t_data *data, int *min_start, int i)
+static int     get_min_start(t_data *data, int *min_start, int i)
 {
     int     start;
     int     end;
@@ -179,4 +116,3 @@ int     get_min_start(t_data *data, int *min_start, int i)
     data->w_map = max_end;
     return (SUCCESS);
 }
-
