@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:57:54 by htharrau          #+#    #+#             */
-/*   Updated: 2025/02/19 12:52:08 by ilazar           ###   ########.fr       */
+/*   Updated: 2025/02/19 13:29:13 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ int	main(int ac, char **av)
 	print_input(&data.input);
 	
 	
-	init_mlx(&data);
-	mlx_image_to_window((&data)->mlx, (&data)->img, 0, 0);
-	print_data((&data));
-	// mlx_close_hook((&data)->mlx, &close_window, &data);
-	mlx_loop_hook((&data)->mlx, &hoop_func, &data);
-	mlx_key_hook((&data)->mlx, &escape, &data);
-	mlx_loop((&data)->mlx);
-	mlx_terminate((&data)->mlx);
+	// init_mlx(&data);
+	// mlx_image_to_window((&data)->mlx, (&data)->img, 0, 0);
+	// print_data((&data));
+	// // mlx_close_hook((&data)->mlx, &close_window, &data);
+	// mlx_loop_hook((&data)->mlx, &hoop_func, &data);
+	// mlx_key_hook((&data)->mlx, &escape, &data);
+	// mlx_loop((&data)->mlx);
+	// mlx_terminate((&data)->mlx);
 	clean_parse((&data));
 	return (0);
 }

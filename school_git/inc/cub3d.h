@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 19:14:51 by htharrau          #+#    #+#             */
-/*   Updated: 2025/02/19 12:40:03 by ilazar           ###   ########.fr       */
+/*   Updated: 2025/02/19 13:52:14 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@
 # define BACK_COL NAVY
 # define RAY_COL LIME
 
+//status states
 # define PARSE_ERR	3
 # define MALLOC_ERR	2
 # define FAILURE	1
@@ -123,11 +124,13 @@ typedef struct s_coord {
 /******************************************************************************/
 /******************************************************************************/
 
+#include "gnl.h"
+
 //elements
 int		parse_elements(char *line, t_data *data, int found_map);
 void	init_data(t_data *data);
 int		parser(char *file_name, t_data *data);
-// char	*get_next_line2(int fd);
+char	*get_next_line2(int fd);
 
 //trim right
 int		trim_lines(t_data *data);
@@ -135,10 +138,11 @@ int		trim_rightend(t_data *data);
 
 //trim left
 int		trim_leftend(t_data *data);
-int		valid_chars(t_data *data, int i, int j);
-int		is_player(char c);
 
-//map rules
+//valid chars
+int		valid_chars(t_data *data, int i, int j);
+
+//valid map
 int		valid_map(t_data *data, int status);
 
 //utils parse

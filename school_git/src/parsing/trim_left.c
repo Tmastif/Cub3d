@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:01:22 by inbar             #+#    #+#             */
-/*   Updated: 2025/02/19 12:49:26 by ilazar           ###   ########.fr       */
+/*   Updated: 2025/02/19 13:20:16 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,43 +75,4 @@ static int	get_min_start(t_data *data, int *min_start, int i)
 			*min_start = start;
 	}
 	return (SUCCESS);
-}
-
-//extracts player position and direction, returns error if found invalid char
-//bc of extracting player's position, should happen after trimming map lines
-int	valid_chars(t_data *data, int i, int j)
-{
-	char	c;
-
-	i = 1;
-	while (data->input.map[++i] != NULL)
-	{
-		j = -1;
-		while (data->input.map[i][++j] != '\0')
-		{
-			c = data->input.map[i][j];
-			if (is_player(c))
-			{
-				if (data->input.play_x != -1)
-					return (err_msg("Multiple players in map :/", PARSE_ERR));
-				data->input.play_x = j;
-				data->input.play_y = i;
-				data->input.cardinal = c;
-				continue ;
-			}
-			if (c != ' ' && c != '1' && c != '0')
-				return (err_msg("Forbbiden character in map:/", PARSE_ERR));
-		}
-	}
-	if (data->input.play_x != -1)
-		return (SUCCESS);
-	return (err_msg("No player found in map :/", PARSE_ERR));
-}
-
-//returns 1 if char is a player char
-int	is_player(char c)
-{
-	if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
-		return (1);
-	return (0);
 }

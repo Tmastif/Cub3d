@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   d_parse_elements.c                                 :+:      :+:    :+:   */
+/*   parse_elements.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:02:11 by ilazar            #+#    #+#             */
-/*   Updated: 2025/02/19 11:19:22 by ilazar           ###   ########.fr       */
+/*   Updated: 2025/02/19 13:39:39 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ static int	get_elem_path(char *line, char **element)
 	{
 		if (line_empty(&line[end]))
 			break ;
-		if (!ft_isascii(line[end]) || ft_isspace(line[end]))
-			return (err_msg("Map contains a bad path :/", PARSE_ERR));
+		if (!ft_isascii(line[end]))
+			return (err_msg("Map contains a bad path1 :/", PARSE_ERR));
 		end++;
 	}
 	if (end == start)
