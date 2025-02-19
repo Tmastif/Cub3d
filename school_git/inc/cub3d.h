@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htharrau <htharrau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 19:14:51 by htharrau          #+#    #+#             */
-/*   Updated: 2025/02/17 17:53:12 by htharrau         ###   ########.fr       */
+/*   Updated: 2025/02/19 12:40:03 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,12 @@
 
 # define OFFSET 10
 # define TILE_SIZE 12
-# define MVT_SPEED 2
-# define ROT_SPEED 0.1
+# define MVT_SPEED 1.2
+# define ROT_SPEED 0.05
 # define FOV 66
 # define WALL_SIZE 3
 
+//Minimap colors
 # define PLY_COL MAGENTA
 # define TILE_COL PINK
 # define FLOOR_COL ORANGE
@@ -54,6 +55,7 @@
 # define FAILURE	1
 # define SUCCESS	0
 
+//Wall colors
 # define NORTH	TEAL
 # define WEST	BLACK
 # define SOUTH	WHITE
@@ -77,7 +79,7 @@ typedef struct s_input {
 	int		sky;
 	int		play_x;
 	int		play_y;
-	char	cardinal;
+	char	cardinal; //player direction
 }		t_input;
 
 typedef struct s_player {
@@ -105,7 +107,7 @@ typedef struct s_ray {
 	int 	step_x;
 	int		step_y;
 	int		line_length;
-	uint	wall_orient;
+	uint	wall_orient; //S N E W
 }		t_ray;
 
 typedef struct s_coord {
@@ -127,11 +129,12 @@ void	init_data(t_data *data);
 int		parser(char *file_name, t_data *data);
 // char	*get_next_line2(int fd);
 
-//map parser
-int		map_parser(t_data *data);
-
-//map trim
+//trim right
 int		trim_lines(t_data *data);
+int		trim_rightend(t_data *data);
+
+//trim left
+int		trim_leftend(t_data *data);
 int		valid_chars(t_data *data, int i, int j);
 int		is_player(char c);
 

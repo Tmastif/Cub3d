@@ -6,18 +6,15 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 12:02:11 by ilazar            #+#    #+#             */
-/*   Updated: 2025/02/18 13:33:29 by ilazar           ###   ########.fr       */
+/*   Updated: 2025/02/19 11:19:22 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub3d.h"
 
-int			parse_elements(char *line, t_data *data, int found_map);
 static int	get_elem_path(char *line, char **element);
 static int	get_clr_elem(char *line, int *element);
 static int	get_clr_component(char *line, int *i, int *comp);
-
-/**need to add possibility to read and ignore spaces from end of string */
 
 //when an element is found it will be validated and stored in data.
 //if element is invalid returns failure

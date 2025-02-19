@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   a_parser.c                                         :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 17:11:28 by ilazar            #+#    #+#             */
-/*   Updated: 2025/02/18 13:18:33 by ilazar           ###   ########.fr       */
+/*   Updated: 2025/02/19 12:51:31 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//map validation
+// map validation
 
 #include "../../inc/cub3d.h"
 
-int			parser(char *file_name, t_data *data);
 static int	valid_map_file(char *name, int *fd);
 static int	elements_finder(int fd, t_data *data, int status);
 static int	save_map(int fd, t_data *data, char **line, int *found_map);
@@ -35,10 +34,12 @@ int	parser(char *file_name, t_data *data)
 		status = valid_chars(data, 0, 0);
 	if (status == SUCCESS)
 		status = valid_map(data, status);
+	if (status != SUCCESS)
+		clean_parse(data);
 	return (status);
 }
 
-//check for no spaces in file's name, for .cub format and if file exists
+// check for no spaces in file's name, for .cub format and if file exists
 static int	valid_map_file(char *name, int *fd)
 {
 	int	i;
@@ -53,19 +54,19 @@ static int	valid_map_file(char *name, int *fd)
 		i++;
 	}
 	if (ft_strcmp(&name[i], ".cub") != 0)
-		return (err_msg("Wrong file format. Should be of format \".cub\" :/", \
-					PARSE_ERR));
+		return (err_msg("Wrong file format. Should be of format \".cub\" :/",
+				PARSE_ERR));
 	*fd = open(name, O_DIRECTORY);
 	if (*fd != -1)
 		return (err_msg("File is a directory :/", PARSE_ERR));
 	*fd = open(name, O_RDONLY);
 	if (*fd == -1)
-		return (err_msg("File has no permissions or doesn't exists :/", \
-					FAILURE));
+		return (err_msg("File has no permissions or doesn't exists :/",
+				FAILURE));
 	return (SUCCESS);
 }
 
-//finds the differenct map file elements
+// finds the differenct map file elements
 static int	elements_finder(int fd, t_data *data, int status)
 {
 	char	*line;
@@ -94,8 +95,8 @@ static int	elements_finder(int fd, t_data *data, int status)
 	return (status);
 }
 
-//save the map to an array
-//make sure that there isn't invalid text under the map
+// save the map to an array
+// make sure that there isn't invalid text under the map
 static int	save_map(int fd, t_data *data, char **line, int *found_map)
 {
 	int		length;
@@ -104,7 +105,7 @@ static int	save_map(int fd, t_data *data, char **line, int *found_map)
 	if (*found_map)
 		return (err_msg("Invalid map :/", PARSE_ERR));
 	length = 1;
-	map = (char **) malloc (sizeof(char *) * (2));
+	map = (char **)malloc(sizeof(char *) * (2));
 	map[0] = ft_strdup(*line);
 	map[1] = NULL;
 	while (*line != NULL)
@@ -126,13 +127,13 @@ static int	save_map(int fd, t_data *data, char **line, int *found_map)
 	return (SUCCESS);
 }
 
-//adds a new line to the map array
+// adds a new line to the map array
 static char	**add_line_to_arr(char **map, char *line, int *length)
 {
 	char	**tmp;
 	int		i;
 
-	tmp = (char **) malloc (sizeof(char *) * (*length + 2));
+	tmp = (char **)malloc(sizeof(char *) * (*length + 2));
 	i = 0;
 	while (i < *length)
 	{

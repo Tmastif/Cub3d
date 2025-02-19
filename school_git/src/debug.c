@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 21:25:58 by htharrau          #+#    #+#             */
-/*   Updated: 2025/02/18 13:34:36 by ilazar           ###   ########.fr       */
+/*   Updated: 2025/02/18 18:02:47 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	print_input(t_input *input)
 	i = 0;
 	while (i < input->h_map)
 	{
-		printf("%s\n", input->map[i]);
+		printf("%s$\n", input->map[i]);
 		i++;
 	}
 }

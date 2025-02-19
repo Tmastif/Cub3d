@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: htharrau <htharrau@student.42.fr>          +#+  +:+       +#+         #
+#    By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/27 19:14:42 by htharrau          #+#    #+#              #
-#    Updated: 2025/02/17 17:47:27 by htharrau         ###   ########.fr        #
+#    Updated: 2025/02/19 12:45:34 by ilazar           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,8 @@ MLX_DIR		= MLX42
 LIBFT		= $(LIBFT_DIR)libft.a
 MLX			= $(MLX_DIR)build/libmlx42.a
 
-SRCS		= $(addprefix $(PARSE_DIR), a_parser.c  b_map_trim.c c_valid_map.c \
-				d_parse_elements.c  e_utils_parse.c) \
+SRCS		= $(addprefix $(PARSE_DIR), parser.c  trim_right.c trim_left.c \
+				valid_map.c parse_elements.c  utils_parse.c) \
 			  $(addprefix $(RAYCAST_DIR), a_init_mlx.c   c_draw_minimap.c  \
 			  	e_draw_fov.c  g_cast_rays.c h_dda.c x_helper.c b_loop_hook.c  \
 				d_draw_player.c   f_update_t_play.c  l_escape.c   z_cleanup.c) \

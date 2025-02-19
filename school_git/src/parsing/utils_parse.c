@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   e_utils_parse.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htharrau <htharrau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 16:31:50 by ilazar            #+#    #+#             */
-/*   Updated: 2025/02/17 13:40:12 by htharrau         ###   ########.fr       */
+/*   Updated: 2025/02/19 11:19:31 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub3d.h"
-
-void	free_2d_char(char **arr);
-int		ft_isspace(char c);
-int		line_empty(char *line);
-char	*is_first_occurance(char *str, char c);
-void	clean_parse(t_data *data);
 
 void	free_2d_char(char **arr)
 {

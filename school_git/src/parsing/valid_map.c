@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   c_valid_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htharrau <htharrau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:44:10 by inbar             #+#    #+#             */
-/*   Updated: 2025/02/17 13:39:10 by htharrau         ###   ########.fr       */
+/*   Updated: 2025/02/19 12:40:49 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub3d.h"
 
-int			valid_map(t_data *data, int status);
 static int	check_space(t_data *data, int row, int col);
 static int	check_zero(t_data *data, int row, int col);
 static int	check_top_bottom(t_data *data);
@@ -31,7 +30,7 @@ int	valid_map(t_data *data, int status)
 		col = 0;
 		while (data->input.map[i][col + 1] != '\0')
 			col++;
-		if (data->input.map[i][col] != '1')
+		if (data->input.map[i][col] != '1' && data->input.map[i][col] != ' ')
 			return (err_msg("Map contains open walls :/", PARSE_ERR));
 		while (--col != 0 && status == SUCCESS)
 		{
