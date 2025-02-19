@@ -6,7 +6,7 @@
 #    By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/27 19:14:42 by htharrau          #+#    #+#              #
-#    Updated: 2025/02/19 13:54:26 by ilazar           ###   ########.fr        #
+#    Updated: 2025/02/19 17:41:30 by ilazar           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,7 @@ LIBFT		= $(LIBFT_DIR)libft.a
 MLX			= $(MLX_DIR)build/libmlx42.a
 
 SRCS		= $(addprefix $(PARSE_DIR), parser.c  trim_right.c trim_left.c \
-				valid_map.c valid_chars.c parse_elements.c  utils_parse.c \
-				gnl.c gnl_utils.c) \
+				valid_map.c valid_chars.c parse_elements.c  utils_parse.c) \
 			  $(addprefix $(RAYCAST_DIR), a_init_mlx.c   c_draw_minimap.c  \
 			  	e_draw_fov.c  g_cast_rays.c h_dda.c x_helper.c b_loop_hook.c  \
 				d_draw_player.c   f_update_t_play.c  l_escape.c   z_cleanup.c) \

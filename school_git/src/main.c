@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:57:54 by htharrau          #+#    #+#             */
-/*   Updated: 2025/02/19 13:29:13 by ilazar           ###   ########.fr       */
+/*   Updated: 2025/02/19 17:46:19 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	main(int ac, char **av)
 	init_data((&data));
 	
 	//may return malloc err
+	// (void) av;
+	// status = 0;
 	status = parser(av[1], &data);
 	if (status != SUCCESS)
 		return (status);

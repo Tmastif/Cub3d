@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htharrau <htharrau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 11:56:14 by ilazar            #+#    #+#             */
-/*   Updated: 2025/02/17 13:35:44 by htharrau         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:44:43 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,14 @@ void	init_data(t_data *data)
 	data->player.x = 0;
 	data->player.y = 0;
 	data->player.angle_r = 0;
+	data->textures = NULL;
 }
+
+// int		init_textures(t_data *data)
+// {
+// 	data->textures = (int **) malloc(sizeof(int *));
+// 	if (!data->textures)
+// 		handle_error("Malloc", data, MALLOC_ERR);
+// 	data->textures[NO] = xpm_to_img(data, data->input->no);
+	
+// }

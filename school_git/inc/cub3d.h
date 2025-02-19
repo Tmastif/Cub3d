@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 19:14:51 by htharrau          #+#    #+#             */
-/*   Updated: 2025/02/19 13:52:14 by ilazar           ###   ########.fr       */
+/*   Updated: 2025/02/19 17:46:59 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,12 @@
 # define FAILURE	1
 # define SUCCESS	0
 
+//walls
+# define NO	0
+# define SO	1
+# define WE	2
+# define EA	3
+
 //Wall colors
 # define NORTH	TEAL
 # define WEST	BLACK
@@ -94,6 +100,7 @@ typedef struct s_data {
 	mlx_image_t	*img;
 	t_input		input;
 	t_player	player;
+	int			**textures;
 }		t_data;
 
 typedef struct s_ray {
@@ -116,6 +123,15 @@ typedef struct s_coord {
 	float	y;
 }		t_coord;
 
+typedef struct s_img
+{
+	void	*img;
+	int		*addr;
+	int		pixel_bits;
+	int		size_line;
+	int		endian;
+}	t_img;
+
 
 
 /******************************************************************************/
@@ -124,13 +140,11 @@ typedef struct s_coord {
 /******************************************************************************/
 /******************************************************************************/
 
-#include "gnl.h"
-
 //elements
 int		parse_elements(char *line, t_data *data, int found_map);
 void	init_data(t_data *data);
 int		parser(char *file_name, t_data *data);
-char	*get_next_line2(int fd);
+// char	*get_next_line2(int fd);
 
 //trim right
 int		trim_lines(t_data *data);
@@ -168,8 +182,8 @@ void	cast_rays(t_data *data);
 void	dda(t_data *data, t_ray *ray);
 void	escape(mlx_key_data_t keys, void *param);
 float	degree_to_rad(int nb);
-void	handle_error(char *error_message, t_data *data);
-int		close_window(void *param);
+void	handle_error(char *error_message, t_data *data, int exit_status);
+void	close_window(void *param, int exit_status);
 float	degree_to_rad(int nb);
 
 /******************************************************************************/
