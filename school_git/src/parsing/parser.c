@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 17:11:28 by ilazar            #+#    #+#             */
-/*   Updated: 2025/02/19 14:03:37 by ilazar           ###   ########.fr       */
+/*   Updated: 2025/02/19 17:40:46 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static int	elements_finder(int fd, t_data *data, int status)
 	{
 		if (line)
 			free(line);
-		line = get_next_line2(fd);
+		line = get_next_line(fd);
 		if (!line && found_map)
 			return (status);
 		if (!line)
@@ -111,7 +111,7 @@ static int	save_map(int fd, t_data *data, char **line, int *found_map)
 	while (*line != NULL)
 	{
 		free(*line);
-		*line = get_next_line2(fd);
+		*line = get_next_line(fd);
 		if (!*line)
 			break ;
 		if (!is_first_occurance(*line, '1'))

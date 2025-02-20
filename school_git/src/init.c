@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htharrau <htharrau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 11:56:14 by ilazar            #+#    #+#             */
-/*   Updated: 2025/02/17 13:35:44 by htharrau         ###   ########.fr       */
+/*   Updated: 2025/02/20 12:22:17 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,17 @@ void	init_data(t_data *data)
 	data->player.x = 0;
 	data->player.y = 0;
 	data->player.angle_r = 0;
+	data->textures = NULL;
 }
+
+
+
+void	init_img(t_img *img)
+{
+	img->img = NULL;
+	img->addr = NULL;
+	img->pixel_bits = 0;
+	img->size_line = 0;
+	img->endian = 0;
+}
+
