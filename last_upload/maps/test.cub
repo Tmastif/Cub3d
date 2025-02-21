@@ -1,11 +1,12 @@
-                NO     /home/ilazar/a_projects/cube3d/school3/imgs/color_stone.xpm
-SO /home/ilazar/a_projects/cube3d/school3/imgs/color_stone.xpm
-WE /home/ilazar/a_projects/cube3d/school3/imgs/color_stone.xpm
-EA /home/ilazar/a_projects/cube3d/school3/imgs/color_stone.xpm
-F 220,100,0     
-C 225,30,0
+NO imgs/dirt.png
+SO imgs/colorstone.png
+WE imgs/mossy.png
+EA imgs/redbrick.png
+F 100,150,80     
+C 50,100,200
 1111111111111111111
 1000000000110000001
 1011000001110000001     
 100100000N000000001
 1111111111111111111
+

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+         #
+#    By: inbar <inbar@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/27 19:14:42 by htharrau          #+#    #+#              #
-#    Updated: 2025/02/21 16:57:38 by ilazar           ###   ########.fr        #
+#    Updated: 2025/02/07 15:00:53 by inbar            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ TEXTURE_DIR = $(SRCS_DIR)textures/
 OBJS_DIR	= obj/
 INCS_DIR	= inc/
 LIBFT_DIR	= libft/
-MLX_DIR		= MLX42
+MLX_DIR		= MLX42/
 
 LIBFT		= $(LIBFT_DIR)libft.a
 MLX			= $(MLX_DIR)build/libmlx42.a
@@ -37,7 +37,8 @@ OBJS		= $(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
 CC 			= cc
 CFLAGS 		= -Wall -Wextra -Werror -I$(MLX_DIR)/include -I$(LIBFT_DIR) -I$(INCS_DIR)
 LDFLAGS 	= -L$(LIBFT_DIR) -L$(MLX_DIR)/build -lft -lmlx42  -ldl -lglfw -pthread -lm
-
+##LDFLAGS 	= -L$(LIBFT_DIR) -L$(MLX_DIR)/build  -ldl -lglfw -pthread -lm
+##gcc main.c ... libmlx42.a -Iinclude -ldl -lglfw -pthread -lm
 MAKE		= make --no-print-directory
 
 .SILENT:
@@ -57,7 +58,7 @@ $(LIBFT):
 				echo "$(MAGENTA)Libft created$(DEFAULT)"
 
 $(MLX):
-				cmake -B $(MLX_DIR)/build -S $(MLX_DIR)
+				cmake -B $(MLX_DIR)build -S $(MLX_DIR)
 				$(MAKE) -C $(MLX_DIR)/build -j4
 				echo "$(MAGENTA)Minilibx created$(DEFAULT)"
 
