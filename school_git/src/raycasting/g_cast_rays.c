@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   g_cast_rays.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htharrau <htharrau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 10:40:14 by htharrau          #+#    #+#             */
-/*   Updated: 2025/02/17 17:53:48 by htharrau         ###   ########.fr       */
+/*   Updated: 2025/02/21 17:11:44 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,16 @@ static void	projected_length(t_data *data, t_ray *ray)
 	float	orthogonal_dist;
 
 	if (ray->wall_orient == EAST || ray->wall_orient == WEST)
+	{	
 		orthogonal_dist = (ray->dist_x - ray->hypo_x) * TILE_SIZE;
+		ray->wall_x = data->player.y + orthogonal_dist * ray->sin_angle;
+	}	
 	else
+	{
 		orthogonal_dist = (ray->dist_y - ray->hypo_y) * TILE_SIZE;
+		ray->wall_x = data->player.x + orthogonal_dist * ray->cos_angle;
+		ray->wall_x -= floor(ray->wall_x);
+	}
 	ray->line_length = (int)(data->mlx->height / orthogonal_dist * WALL_SIZE);
 }
 
@@ -74,6 +81,7 @@ static void	draw_vertical(t_data *data, t_ray *ray, int u)
 	int	height;
 	int	ord_top;
 	int	ord_bottom;
+	t_texture	texture;
 
 	height = data->mlx->height;
 	ord_top = (height - ray->line_length) / 2;
@@ -82,10 +90,22 @@ static void	draw_vertical(t_data *data, t_ray *ray, int u)
 	ord_bottom = (height + ray->line_length) / 2;
 	if (ord_bottom >= height)
 		ord_bottom = height - 1;
+	//get appropriate texture for wall orientation
+	texture.png = get_texture_orient(data, ray);
+	//calculate the x-coordinate on the texture
+	texture.tex_x = calc_texture_x(ray, texture.png);
 	v = ord_top;
-	while (v <= ord_bottom)
+	while (v < ord_bottom)
 	{
-		mlx_put_pixel(data->img, u, v, ray->wall_orient);
+		//calculate y-coordinate on the texture
+		texture.tex_y = (v - ord_top) * texture.png->height / ray->line_length;
+		//sample the color from the texture
+		texture.color = sample_color(&texture);	
+		//apply the sampled color to the pixel
+		mlx_put_pixel(data->img, u, v, texture.color);
+		
+		//original helene
+		// mlx_put_pixel(data->img, u, v, ray->wall_orient);
 		v++;
 	}
 }

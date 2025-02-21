@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 19:14:51 by htharrau          #+#    #+#             */
-/*   Updated: 2025/02/20 15:05:29 by ilazar           ###   ########.fr       */
+/*   Updated: 2025/02/21 17:10:27 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,22 +115,24 @@ typedef struct s_ray {
 	int 	step_x;
 	int		step_y;
 	int		line_length;
-	uint	wall_orient; //S N E W
+	uint	wall_orient; 	//S N E W
+	float	wall_x; 		//exact hit point on the wall
+	
 }		t_ray;
+
+typedef struct s_texture {
+	mlx_texture_t	*png;
+	int				tex_x; //x coordinate on the texture
+	int				tex_y; //y coordinate on the texture
+	uint32_t		color;
+}		t_texture;
+
 
 typedef struct s_coord {
 	float	x;
 	float	y;
 }		t_coord;
 
-typedef struct s_img
-{
-	void	*img;
-	int		*addr;
-	int		pixel_bits;
-	int		size_line;
-	int		endian;
-}	t_img;
 
 
 
@@ -192,8 +194,12 @@ float	degree_to_rad(int nb);
 /******************************************************************************/
 /******************************************************************************/
 
-void	load_textures(t_data *data);
-void    clean_textures(t_data *data);
+void			load_textures(t_data *data);
+uint32_t		sample_color(t_texture *texture);
+mlx_texture_t 	*get_texture_orient(t_data *data, t_ray *ray);
+int				calc_texture_x(t_ray *ray, mlx_texture_t *texture);
+
+// void    clean_textures(t_data *data);
 
 /******************************************************************************/
 /******************************************************************************/
@@ -205,6 +211,7 @@ void	print_player(t_player *player);
 void	print_input(t_input *input);
 void	print_data(t_data *data);
 int		err_msg(char *msg, int err_nr);
+void	exit_err(t_data *data, char *msg, int exit_status);
 
 #endif
 

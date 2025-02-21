@@ -6,7 +6,7 @@
 #    By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/27 19:14:42 by htharrau          #+#    #+#              #
-#    Updated: 2025/02/20 12:28:46 by ilazar           ###   ########.fr        #
+#    Updated: 2025/02/21 16:57:38 by ilazar           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ SRCS		= $(addprefix $(PARSE_DIR), parser.c  trim_right.c trim_left.c \
 			  	e_draw_fov.c  g_cast_rays.c h_dda.c x_helper.c b_loop_hook.c  \
 				d_draw_player.c   f_update_t_play.c  l_escape.c   z_cleanup.c) \
 			  $(addprefix $(SRCS_DIR), init.c errors.c main.c debug.c) \
-			  $(addprefix $(TEXTURE_DIR), xpm.c)
+			  $(addprefix $(TEXTURE_DIR), draft.c textures.c)
 
 OBJS		= $(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
 
