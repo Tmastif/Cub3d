@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 11:56:14 by ilazar            #+#    #+#             */
-/*   Updated: 2025/02/21 17:12:23 by ilazar           ###   ########.fr       */
+/*   Updated: 2025/03/06 13:19:43 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ void		load_textures(t_data *data)
 	data->textures = (mlx_texture_t **) malloc(sizeof(mlx_texture_t *) * 4);
 	if (!data->textures)
 		exit_err(data, "Malloc", MALLOC_ERR);
-	data->textures[NO] = load_png(data, data->input.no);
-	data->textures[SO] = load_png(data, data->input.so);
-	data->textures[WE] = load_png(data, data->input.we);
-	data->textures[EA] = load_png(data, data->input.ea);
+	data->textures[NORTH] = load_png(data, data->input.no);
+	data->textures[SOUTH] = load_png(data, data->input.so);
+	data->textures[WEST] = load_png(data, data->input.we);
+	data->textures[EAST] = load_png(data, data->input.ea);
 	// convert_textures(data);
 }
 

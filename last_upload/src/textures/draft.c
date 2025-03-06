@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:53:15 by ilazar            #+#    #+#             */
-/*   Updated: 2025/02/21 16:44:51 by ilazar           ###   ########.fr       */
+/*   Updated: 2025/03/06 12:48:43 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 // Convert texture to a displayable image and put on screen
 void    convert_textures(t_data *data)
 {
-    mlx_image_t* img = mlx_texture_to_image(data->mlx, data->textures[WE]);
+    mlx_image_t* img = mlx_texture_to_image(data->mlx, data->textures[WEST]);
     if (!img)
         exit_err(data, "Converting Textures", FAILURE);
 
@@ -41,4 +41,21 @@ void    clean_textures(t_data *data)
         free(data->textures);
     }
 }
+
+//get appropriate texture for wall orientation
+// mlx_texture_t 	*get_texture_orient(t_data *data, t_ray *ray)
+// {
+// 	mlx_texture_t	*texture;
+	
+// 	if (ray->wall_orient == EAST)
+// 		texture = data->textures[EA];
+// 	if (ray->wall_orient == WEST)
+// 	texture = data->textures[WE];
+// 		if (ray->wall_orient == NORTH)
+// 	texture = data->textures[NO];
+// 	if (ray->wall_orient == SOUTH)
+// 		texture = data->textures[SO];
+// 	return (texture);
+// }
+
 */

@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 10:40:14 by htharrau          #+#    #+#             */
-/*   Updated: 2025/02/21 17:11:44 by ilazar           ###   ########.fr       */
+/*   Updated: 2025/03/06 15:41:21 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void		cast_rays(t_data *data);
 static void	direction(t_ray *ray);
 static void	projected_length(t_data *data, t_ray *ray);
 static void	draw_vertical(t_data *data, t_ray *ray, int u);
+static void	set_ords(int *ord_top, int *ord_bottom, t_data *data, t_ray *ray);
 
 // STEP: FROM ANGLE + (+1/2)FOV_R TO ANGLE - (-1/2)FOV_R - 
 // step depending on window size - one ray per pixel
@@ -78,34 +79,44 @@ static void	projected_length(t_data *data, t_ray *ray)
 static void	draw_vertical(t_data *data, t_ray *ray, int u)
 {
 	int	v;
-	int	height;
 	int	ord_top;
 	int	ord_bottom;
 	t_texture	texture;
 
-	height = data->mlx->height;
-	ord_top = (height - ray->line_length) / 2;
-	if (ord_top < 0)
-		ord_top = 0;
-	ord_bottom = (height + ray->line_length) / 2;
-	if (ord_bottom >= height)
-		ord_bottom = height - 1;
+	set_ords(&ord_top, &ord_bottom, data, ray);
 	//get appropriate texture for wall orientation
-	texture.png = get_texture_orient(data, ray);
+	texture.png = data->textures[ray->wall_orient]; // can be NULL if no tex was uploaded unsucssesfully
 	//calculate the x-coordinate on the texture
 	texture.tex_x = calc_texture_x(ray, texture.png);
 	v = ord_top;
 	while (v < ord_bottom)
 	{
-		//calculate y-coordinate on the texture
-		texture.tex_y = (v - ord_top) * texture.png->height / ray->line_length;
-		//sample the color from the texture
-		texture.color = sample_color(&texture);	
-		//apply the sampled color to the pixel
-		mlx_put_pixel(data->img, u, v, texture.color);
-		
-		//original helene
-		// mlx_put_pixel(data->img, u, v, ray->wall_orient);
+		if (texture.png)
+		{
+			//calculate y-coordinate on the texture
+			texture.tex_y = (v - ord_top) * \
+			texture.png->height / ray->line_length;
+			//sample the color from the texture
+			texture.color = sample_color(&texture);	
+			//apply the sampled color to the pixel
+			mlx_put_pixel(data->img, u, v, texture.color);
+		}
+		else
+			mlx_put_pixel(data->img, u, v, use_default_clr(ray->wall_orient));
 		v++;
 	}
+}
+
+//setting ord_top and ord_bottom
+static void	set_ords(int *ord_top, int *ord_bottom, t_data *data, t_ray *ray)
+{
+	int	height;
+		
+	height = data->mlx->height;
+	*ord_top = (height - ray->line_length) / 2;
+	if (*ord_top < 0)
+		*ord_top = 0;
+	*ord_bottom = (height + ray->line_length) / 2;
+	if (*ord_bottom >= height)
+		*ord_bottom = height - 1;
 }

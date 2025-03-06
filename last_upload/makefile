@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: inbar <inbar@student.42.fr>                +#+  +:+       +#+         #
+#    By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/27 19:14:42 by htharrau          #+#    #+#              #
-#    Updated: 2025/02/07 15:00:53 by inbar            ###   ########.fr        #
+#    Updated: 2025/03/06 15:52:45 by ilazar           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ SRCS_DIR	= src/
 PARSE_DIR	= $(SRCS_DIR)parsing/
 RAYCAST_DIR	= $(SRCS_DIR)raycasting/
 TEXTURE_DIR = $(SRCS_DIR)textures/
+BONUS_DIR 	= $(SRCS_DIR)bonus/
 OBJS_DIR	= obj/
 INCS_DIR	= inc/
 LIBFT_DIR	= libft/
@@ -30,7 +31,8 @@ SRCS		= $(addprefix $(PARSE_DIR), parser.c  trim_right.c trim_left.c \
 			  	e_draw_fov.c  g_cast_rays.c h_dda.c x_helper.c b_loop_hook.c  \
 				d_draw_player.c   f_update_t_play.c  l_escape.c   z_cleanup.c) \
 			  $(addprefix $(SRCS_DIR), init.c errors.c main.c debug.c) \
-			  $(addprefix $(TEXTURE_DIR), draft.c textures.c)
+			  $(addprefix $(TEXTURE_DIR), draft.c textures.c) \
+			  $(addprefix $(BONUS_DIR), mouse.c)
 
 OBJS		= $(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
 

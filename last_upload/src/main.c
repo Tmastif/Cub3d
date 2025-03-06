@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:57:54 by htharrau          #+#    #+#             */
-/*   Updated: 2025/02/21 15:41:46 by ilazar           ###   ########.fr       */
+/*   Updated: 2025/03/06 16:38:16 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,18 @@ int	main(int ac, char **av)
 	
 	// clean_textures(&data);
 	
-	// print_data((&data));
+	print_data((&data));
 	// // mlx_close_hook((&data)->mlx, &close_window, &data);
 	mlx_loop_hook((&data)->mlx, &hoop_func, &data);
 	mlx_key_hook((&data)->mlx, &escape, &data);
+	mlx_cursor_hook((&data)->mlx, &mouse_callback, &data);
 	mlx_loop((&data)->mlx);
 	
 	
 	mlx_terminate((&data)->mlx);
 	// printf("terminate error\n");
-	
-	clean_parse((&data));
+	clean_textures(&data);
+	clean_parse(&data);
 	return (0);
 }
 

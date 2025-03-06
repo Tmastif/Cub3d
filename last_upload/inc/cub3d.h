@@ -6,7 +6,7 @@
 /*   By: ilazar <ilazar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 19:14:51 by htharrau          #+#    #+#             */
-/*   Updated: 2025/02/21 17:10:27 by ilazar           ###   ########.fr       */
+/*   Updated: 2025/03/06 16:27:19 by ilazar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,17 +56,18 @@
 # define FAILURE	1
 # define SUCCESS	0
 
-//walls
-# define NO	0
-# define SO	1
-# define WE	2
-# define EA	3
+//Walls
+# define NORTH	0
+# define WEST	1
+# define SOUTH	2
+# define EAST	3
 
-//Wall colors
-# define NORTH	TEAL
-# define WEST	BLACK
-# define SOUTH	WHITE
-# define EAST	GRAY
+//Wall default colors
+# define CLR_NORTH	TEAL
+# define CLR_WEST	ORANGE
+# define CLR_SOUTH	PURPLE
+# define CLR_EAST	GRAY
+
 
 # include <math.h>
 # include <time.h>
@@ -196,10 +197,9 @@ float	degree_to_rad(int nb);
 
 void			load_textures(t_data *data);
 uint32_t		sample_color(t_texture *texture);
-mlx_texture_t 	*get_texture_orient(t_data *data, t_ray *ray);
 int				calc_texture_x(t_ray *ray, mlx_texture_t *texture);
-
-// void    clean_textures(t_data *data);
+int 			use_default_clr(uint wall_orient);
+void    		clean_textures(t_data *data);
 
 /******************************************************************************/
 /******************************************************************************/
@@ -212,6 +212,11 @@ void	print_input(t_input *input);
 void	print_data(t_data *data);
 int		err_msg(char *msg, int err_nr);
 void	exit_err(t_data *data, char *msg, int exit_status);
+
+
+//BONUS
+void 	mouse_callback(double xpos, double ypos, void* param);
+
 
 #endif
 
